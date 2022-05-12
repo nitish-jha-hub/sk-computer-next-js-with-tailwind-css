@@ -6,6 +6,8 @@ import { AiOutlineShoppingCart, AiFillCloseSquare, AiFillPlusCircle, AiFillMinus
 import { BsFillBagCheckFill } from 'react-icons/bs'
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md'
 import { VscAccount } from 'react-icons/vsc'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Header = ({ Cart, addToCart, removeFromCart, clearCart, subTotal }) => {
@@ -26,6 +28,7 @@ const Header = ({ Cart, addToCart, removeFromCart, clearCart, subTotal }) => {
     return (
 
         <div className='sticky top-0 z-40'>
+            <ToastContainer/>
             <nav className=" flex bg-slate-50 flex-col justify-between items-center md:flex-row text-slate-800 drop-shadow-lg rounded-b-2xl">
                 <div>
                 <Link href="/"><a className="mx-4" ><Image className="border-2 border-zinc-900 rounded-xl" src="/sk-computer-logo.jpg" alt="Logo sk-computer saharsa" width={45} height={45} /></a></Link>

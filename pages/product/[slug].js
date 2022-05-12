@@ -2,12 +2,15 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const Post = ({addToCart}) => {
+const Post = ({ addToCart }) => {
   const router = useRouter()
   const { slug } = router.query
   const [pin, setPin] = useState()
   const [service, setService] = useState()
+
 
   const cheakServiceability = async () => {
     let pins = await fetch('http://localhost:3000/api/pincodes')
@@ -15,16 +18,34 @@ const Post = ({addToCart}) => {
 
     if (pinJson.includes(parseInt(pin))) {
       setService(true)
+      toast.success('your pin code is Serviceable!', {
+        position: "bottom-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     }
-    else{
+    else {
+      toast.error('Sorry, Pincode not Serviceable!', {
+        position: "bottom-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
       setService(false)
     }
     // console.log(pinJson, pin);
   }
 
-const onChangePin = (e) =>{
-  setPin(e.target.value)
-}
+  const onChangePin = (e) => {
+    setPin(e.target.value)
+  }
   return <>
     <section className="text-gray-600 body-font overflow-hidden">
       <div className="container px-5 py-24 mx-auto">
@@ -98,8 +119,8 @@ const onChangePin = (e) =>{
             <div className="flex flex-wrap">
               <span className="title-font font-medium text-2xl text-gray-900">₹300.00</span>
               {/*product details */}
-              <Link href="/checkout"><a className='flex ml-auto text-white bg-orange-600 border-0 py-2 px-6 focus:outline-none hover:bg-orange-700 rounded'><button onClick={()=>addToCart(slug,1,300,'Printer service','no','black')} className="">Buy Now</button></a></Link>
-              <button onClick={()=>addToCart(slug,1,300,'Printer service','no','black')} className="flex ml-auto text-white bg-orange-600 border-0 py-2 px-6 focus:outline-none hover:bg-orange-700 rounded">Add to Cart</button>
+              <Link href="/checkout"><a className='flex ml-auto text-white bg-orange-600 border-0 py-2 px-6 focus:outline-none hover:bg-orange-700 rounded'><button onClick={() => addToCart(slug, 1, 300, 'Printer service', 'no', 'black')} className="">Buy Now</button></a></Link>
+              <button onClick={() => addToCart(slug, 1, 300, 'Printer service', 'no', 'black')} className="flex ml-auto text-white bg-orange-600 border-0 py-2 px-6 focus:outline-none hover:bg-orange-700 rounded">Add to Cart</button>
               <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-600 ml-4">
                 <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
                   <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
@@ -110,8 +131,8 @@ const onChangePin = (e) =>{
               <input onChange={onChangePin} className='border-2 border-neutral-400 rounded-md' type="text" placeholder='Enter Your Pin' />
               <button onClick={cheakServiceability} className="flex ml-auto mr-14 text-white bg-orange-600 border-0 py-2 px-6 focus:outline-none hover:bg-orange-700 rounded">Cheak</button>
             </div>
-            {!service && service !=null && <div className='text-red-700'>Sorry! We do not delivered to this pin code</div>}
-            {service && service !=null && <div className='text-green-700'>Service Available</div>}
+            {!service && service != null && <div className='text-red-700'>Sorry! We do not delivered to this pin code</div>}
+            {service && service != null && <div className='text-green-700'>Service Available</div>}
           </div>
         </div>
       </div>
