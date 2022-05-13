@@ -1,7 +1,60 @@
 import React from 'react'
 import Link from 'next/link'
+import { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Signup = () => {
+  const [firstname, setFirstname] = useState()
+  const [lastname, setLastname] = useState()
+  const [email, setEmail] = useState()
+  const [password, setPassword] = useState()
+
+  const handleChange = (e) => {
+    if (e.target.name == 'firstname') {
+      setFirstname(e.target.value)
+    }
+    if (e.target.name == 'lastname') {
+      setLastname(e.target.value)
+    }
+    if (e.target.name == 'email') {
+      setEmail(e.target.value)
+    }
+    if (e.target.name == 'password') {
+      setPassword(e.target.value)
+    }
+
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const data = { firstname, lastname, email, password }
+    let res = await fetch('http://localhost:3000/api/signup', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    let response = await res.json()
+    // console.log(response)
+
+    setFirstname('')
+    setLastname('')
+    setEmail('')
+    setPassword('')
+    toast.success('Success! your account created', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
+
+  }
+
   return (
     <div>
       <div className="font-mono ">
@@ -14,26 +67,27 @@ const Signup = () => {
               </div>
               <div className="w-full lg:w-7/12 bg-white p-5 rounded-lg lg:rounded-l-none md:border-r-2 border-zinc-300">
                 <h3 className="pt-4 text-2xl text-center">Create an Account!</h3>
-                <form className="px-8 pt-6 pb-8 mb-4 bg-white rounded">
+                <form onSubmit={handleSubmit} className="px-8 pt-6 pb-8 mb-4 bg-white rounded" method="POST">
                   <div className="mb-4 md:flex md:justify-between">
                     <div className="mb-4 md:mr-2 md:mb-0">
-                      <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="firstName">
+                      <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="firstname">
                         First Name
                       </label>
-                      <input
+                      <input value={firstname} onChange={handleChange}
                         className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                        id="firstName"
+                        id="firstname"
+                        name="firstname"
                         type="text"
                         placeholder="First Name"
                       />
                     </div>
                     <div className="md:ml-2">
-                      <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="lastName">
+                      <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="lastname">
                         Last Name
                       </label>
-                      <input
+                      <input value={lastname} name="lastname" onChange={handleChange}
                         className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                        id="lastName"
+                        id="lastname"
                         type="text"
                         placeholder="Last Name"
                       />
@@ -43,7 +97,7 @@ const Signup = () => {
                     <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="email">
                       Email
                     </label>
-                    <input
+                    <input value={email} name="email" onChange={handleChange}
                       className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                       id="email"
                       type="email"
@@ -55,30 +109,20 @@ const Signup = () => {
                       <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="password">
                         Password
                       </label>
-                      <input
+                      <input value={password} name="password" onChange={handleChange}
                         className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                         id="password"
                         type="password"
                         placeholder="******************"
                       />
                       <p className="text-xs italic text-red-500">Please choose a password.</p>
-                    </div>
-                    <div className="md:ml-2">
-                      <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="c_password">
-                        Confirm Password
-                      </label>
-                      <input
-                        className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
-                        id="c_password"
-                        type="password"
-                        placeholder="******************"
-                      />
+
                     </div>
                   </div>
                   <div className="mb-6 text-center">
                     <button
                       className="w-full px-4 py-2 font-bold text-white bg-orange-600 rounded-full hover:bg-orange-700 focus:outline-none focus:shadow-outline"
-                      type="button"
+                      type="submit"
                     >
                       Register Account
                     </button>

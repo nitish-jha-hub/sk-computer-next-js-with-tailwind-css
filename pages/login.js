@@ -1,7 +1,71 @@
 import React from 'react'
 import Link from 'next/link'
+import { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import useRouter from 'next/router';
+
+
 
 const Login = () => {
+    const router = useRouter
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+
+    const handleChange = (e) => {
+        if (e.target.name == 'email') {
+            setEmail(e.target.value)
+        }
+        if (e.target.name == 'password') {
+            setPassword(e.target.value)
+        }
+
+    }
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const data = { email, password }
+        let res = await fetch('http://localhost:3000/api/login', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        let response = await res.json()
+        // console.log(response)
+
+        setEmail('')
+        setPassword('')
+        if (response.success) {
+            localStorage.setItem('token' , response.token)
+            toast.success('you are successfully logeed in', {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+            // setTimeout(() => {
+            // }, 1000);
+            router.push('http://localhost:3000')
+        }
+        else {
+            toast.error('Invalid login details', {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
+        }
+    }
+
     return (
         <div>
             <section className="h-full gradient-form bg-gray-200">
@@ -20,21 +84,22 @@ const Login = () => {
                                                 />
                                                 <h4 className="text-xl font-semibold mt-1 mb-6 pb-1">We are The SK Computer Team</h4>
                                             </div>
-                                            <form>
+                                            <form onSubmit={handleSubmit} method="POST">
                                                 <p className="mb-4">Please login to your account</p>
                                                 <div className="mb-4">
-                                                    <input
+                                                    <input value={email} onChange={handleChange} name="email"
                                                         type="text"
                                                         className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                                        id="exampleFormControlInput1"
-                                                        placeholder="Username"
+                                                        id="email"
+                                                        placeholder="Email / Username"
                                                     />
                                                 </div>
                                                 <div className="mb-4">
-                                                    <input
+                                                    <input value={password} onChange={handleChange}
+                                                        name="password"
                                                         type="password"
                                                         className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                                                        id="exampleFormControlInput1"
+                                                        id="password"
                                                         placeholder="Password"
                                                     />
                                                 </div>
@@ -44,9 +109,10 @@ const Login = () => {
                                                 </div>
                                                 <div className="text-center pt-1 mb-6 pb-1">
                                                     <button
-                                                    // have to cheak transion on click
+                                                        type="submit"
+                                                        // have to cheak transion on click
                                                         className="inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
-                                                        type="button"
+
                                                         data-mdb-ripple="true"
                                                         data-mdb-ripple-color="light"
                                                         style={{ background: "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)" }}
@@ -72,7 +138,7 @@ const Login = () => {
                                     <div
                                         className="lg:w-6/12 flex items-center lg:rounded-r-lg rounded-b-lg lg:rounded-bl-none"
                                         // inline css in react js
-                                        style={{background: "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)"}}
+                                        style={{ background: "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)" }}
                                     >
                                         <div className="text-white px-4 py-6 md:p-12 md:mx-6">
                                             <h4 className="text-xl font-semibold mb-6">We are more than just a company</h4>
