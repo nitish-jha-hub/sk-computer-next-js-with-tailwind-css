@@ -8,12 +8,12 @@ import 'react-toastify/dist/ReactToastify.css';
 const Post = ({ addToCart }) => {
   const router = useRouter()
   const { slug } = router.query
-  const [pin, setPin] = useState()
+  const [pin, setPin] = useState('')
   const [service, setService] = useState()
 
 
   const cheakServiceability = async () => {
-    let pins = await fetch('http://localhost:3000/api/pincodes')
+    let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincodes`)
     let pinJson = await pins.json()
 
     if (pinJson.includes(parseInt(pin))) {

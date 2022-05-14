@@ -4,13 +4,21 @@ import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useRouter from 'next/router';
+import { useEffect } from 'react';
 
 
 
 const Login = () => {
     const router = useRouter
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    useEffect(() => {
+        if (localStorage.getItem ('token') ) {
+            router.push('/')            
+        }
+    }, [router])
+    
 
     const handleChange = (e) => {
         if (e.target.name == 'email') {
@@ -26,7 +34,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const data = { email, password }
-        let res = await fetch('http://localhost:3000/api/login', {
+        let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/login`, {
             method: 'POST', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',
@@ -39,19 +47,19 @@ const Login = () => {
         setEmail('')
         setPassword('')
         if (response.success) {
-            localStorage.setItem('token' , response.token)
+            localStorage.setItem('token', response.token)
             toast.success('you are successfully logeed in', {
                 position: "top-center",
-                autoClose: 2000,
+                autoClose: 1000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
                 draggable: true,
                 progress: undefined,
             });
-            // setTimeout(() => {
-            // }, 1000);
-            router.push('http://localhost:3000')
+            setTimeout(() => {
+                router.push(`${process.env.NEXT_PUBLIC_HOST}`)
+            }, 1000);
         }
         else {
             toast.error('Invalid login details', {

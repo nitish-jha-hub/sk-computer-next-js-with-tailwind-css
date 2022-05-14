@@ -4,15 +4,27 @@ import Footer from './components/footer'
 import { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router';
+import LoadingBar from 'react-top-loading-bar'
 
 function MyApp({ Component, pageProps }) {
   const [Cart, setCart] = useState({})
   const [subTotal, setSubTotal] = useState(0)
+  const [user, setUser] = useState({ value: null })
+  const [key, setKey] = useState(0)
+  const [progress, setProgress] = useState(0)
+  const router = useRouter()
 
   useEffect(() => {
-    // console.log("cheak useEfect");
+    router.events.on('routeChangeStart', ()=>{
+      setProgress(40)
+    })
+    router.events.on('routeChangeComplete', ()=>{
+      setProgress(100)
+    })
+    console.log("cheak useEfect");
     try {
-      if (localStorage.getItem("Cart")){
+      if (localStorage.getItem("Cart")) {
         setCart(JSON.parse(localStorage.getItem("Cart")))
         // if save cart is cart then subt will show subtotal zero on page reload
         saveCart(JSON.parse(localStorage.getItem("Cart")))
@@ -21,17 +33,26 @@ function MyApp({ Component, pageProps }) {
       // console.log(Error)
       localStorage.clear()
     }
-    
-  }, [])
+    const token = localStorage.getItem("token")
+    if (token) {
+      setUser({ value: token })
+      setKey(Math.random()) //to rerender element
+    }
+  }, [router.query])
 
- 
+  const logout=()=>{
+    localStorage.removeItem('token')
+    setUser({value: null})
+    setKey(Math.random())
+  }
+
   const saveCart = (myCart) => {
     // stringify mycart
     localStorage.setItem("Cart", JSON.stringify(myCart))
     let subt = 0;
     let keys = Object.keys(myCart);
     // i is less then keys.length
-    for(let i=0; i<keys.length; i++){
+    for (let i = 0; i < keys.length; i++) {
       subt += myCart[keys[i]].price * myCart[keys[i]].qty;
     }
     setSubTotal(subt);
@@ -43,7 +64,7 @@ function MyApp({ Component, pageProps }) {
       myCart[itemCode].qty = Cart[itemCode].qty + qty
     }
     else {
-      myCart[itemCode] = { qty: 1, price, name, size, varient}
+      myCart[itemCode] = { qty: 1, price, name, size, varient }
     }
     setCart(myCart)
     toast.success('Item added to Your Cart!', {
@@ -54,7 +75,7 @@ function MyApp({ Component, pageProps }) {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      });
+    });
     saveCart(myCart)
   }
 
@@ -80,11 +101,17 @@ function MyApp({ Component, pageProps }) {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      });
+    });
     saveCart(myCart)
   }
   return <>
-    <Header Cart={Cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
+  <LoadingBar
+        color='#FF4500'
+        progress={progress}
+        waitingTime={500}
+        onLoaderFinished={() => setProgress(0)}
+      />
+    <Header logout={logout} user={user} key={key} Cart={Cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
     <Component Cart={Cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
     <Footer />
   </>

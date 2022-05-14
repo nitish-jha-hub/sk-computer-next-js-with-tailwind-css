@@ -8,9 +8,10 @@ import { MdOutlineRemoveShoppingCart } from 'react-icons/md'
 import { VscAccount } from 'react-icons/vsc'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useState } from 'react'
 
 
-const Header = ({ Cart, addToCart, removeFromCart, clearCart, subTotal }) => {
+const Header = ({ logout, user, Cart, addToCart, removeFromCart, clearCart, subTotal }) => {
     // console.log(Cart, addToCart, removeFromCart, clearCart, subTotal);
     const toggleCart = () => {
         if (ref.current.classList.contains('translate-x-full')) {
@@ -25,14 +26,15 @@ const Header = ({ Cart, addToCart, removeFromCart, clearCart, subTotal }) => {
     }
     const ref = useRef();
 
-    return (
+    const [dropdown, setDropdown] = useState('')
 
+    return (
         <div className='sticky top-0 z-40'>
-            <ToastContainer/>
-            <nav className=" flex bg-slate-50 flex-col justify-between items-center md:flex-row text-slate-800 drop-shadow-lg rounded-b-2xl">
+            < ToastContainer />
+            <nav className=" flex bg-slate-50 flex-col sticky top-0 justify-between items-center md:flex-row text-slate-800 drop-shadow-lg rounded-b-2xl">
                 <div>
-                <Link href="/"><a className="mx-4" ><Image className="border-2 border-zinc-900 rounded-xl" src="/sk-computer-logo.jpg" alt="Logo sk-computer saharsa" width={45} height={45} /></a></Link>
-                <div className='hidden lg:inline-block'><Link href="/"><a className="" ><Image src="/assets/skcomputerlogo2.png" alt="Logo sk-computer saharsa" width={175} height={55} /></a></Link></div>
+                    <Link href="/"><a className="mx-4" ><Image className="border-2 border-zinc-900 rounded-xl" src="/sk-computer-logo.jpg" alt="Logo sk-computer saharsa" width={45} height={45} /></a></Link>
+                    <div className='hidden lg:inline-block'><Link href="/"><a className="" ><Image src="/assets/skcomputerlogo2.png" alt="Logo sk-computer saharsa" width={175} height={55} /></a></Link></div>
                 </div>
                 <ul className="flex flex-wrap md:mr-20" id="navmenu">
                     <li className="md:m-4 m-3 "> <Link href='/' ><a
@@ -59,10 +61,21 @@ const Header = ({ Cart, addToCart, removeFromCart, clearCart, subTotal }) => {
                 </a>
             </nav>
 
-            <div className='z-10 absolute flex right-6 top-4 cursor-pointer text-3xl md:right-3 md:text-3xl'>
-            <Link href='/login'><a><VscAccount className='mx-2 text-slate-800' /> </a></Link>
-            <a title='Your Shopping cart'><AiOutlineShoppingCart onClick={toggleCart} className='text-slate-800' /></a>
+            <div className='z-10 absolute flex right-8 top-4 cursor-pointer md:right-3'>
+                <div onMouseOver={() => { setDropdown(true) }} onMouseLeave={() => { setDropdown(false) }}>
+                    {user.value && <VscAccount className='mx-2 text-3xl text-slate-800' />}
+                    {dropdown && <div onMouseOver={() => { setDropdown(true) }} onMouseLeave={() => { setDropdown(false) }} className='absolute bg-orange-300 p-2 font-bold rounded-xl drop-shadow-2xl'><ul>
+                        <Link href="/myaccount"><a><li className='hover:text-slate-100'>Account</li></a></Link>
+                        <Link href="/orders"><a><li className='hover:text-slate-100'>Orders</li></a></Link>
+                        <li onClick={logout} className='hover:text-slate-100 cursor-pointer'>LogOut</li>
+                    </ul></div>}
+                </div>
+                {!user.value && <Link href="/login"><a><button className=' text-white bg-orange-600 py-1 px-1 focus:outline-none hover:bg-orange-700 border-2 rounded-full"'>Login</button></a></Link>}
+                <a title='Your Shopping cart'><AiOutlineShoppingCart onClick={toggleCart} className='text-slate-800 text-3xl' /></a>
             </div>
+
+
+
             <div ref={ref} className='absolute w-72 top-0 right-0 z-50 h-screen bg-orange-200 p-10 transform transition-transform translate-x-full'>
                 <h2 className='text-lg'>Your Shopping Cart</h2>
                 <span onClick={toggleCart} className='cursor-pointer absolute top-3 right-2 text-3xl'><AiFillCloseSquare /></span>
@@ -87,7 +100,8 @@ const Header = ({ Cart, addToCart, removeFromCart, clearCart, subTotal }) => {
                 </div>
             </div>
 
-        </div>
+        </div >
+
 
 
     )
