@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
   const [Cart, setCart] = useState({})
   const [subTotal, setSubTotal] = useState(0)
   const [user, setUser] = useState({ value: null })
-  const [key, setKey] = useState(0)
+  const [key, setKey] = useState(1)
   const [progress, setProgress] = useState(0)
   const router = useRouter()
 
@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }) {
     router.events.on('routeChangeComplete', ()=>{
       setProgress(100)
     })
-    console.log("cheak useEfect");
+    console.log("cheak useEfect from app");
     try {
       if (localStorage.getItem("Cart")) {
         setCart(JSON.parse(localStorage.getItem("Cart")))
@@ -44,6 +44,7 @@ function MyApp({ Component, pageProps }) {
     localStorage.removeItem('token')
     setUser({value: null})
     setKey(Math.random())
+    router.push('/')
   }
 
   const saveCart = (myCart) => {
@@ -111,8 +112,8 @@ function MyApp({ Component, pageProps }) {
         waitingTime={500}
         onLoaderFinished={() => setProgress(0)}
       />
-    <Header logout={logout} user={user} key={key} Cart={Cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
-    <Component Cart={Cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
+    {key && <Header logout={logout} user={user} key={key} Cart={Cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />}
+    {<Component Cart={Cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />}
     <Footer />
   </>
 }

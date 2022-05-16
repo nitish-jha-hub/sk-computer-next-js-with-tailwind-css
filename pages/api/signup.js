@@ -6,7 +6,7 @@ var CryptoJS = require("crypto-js");
 const handler = async (req, res) => {
     if (req.method == 'POST') {
         let {firstname, lastname , email} = req.body
-        let u = new user ({firstname, lastname, email, password: CryptoJS.AES.encrypt(req.body.password, "Nitish@$#91!99").toString()})  
+        let u = new user ({firstname, lastname, email, password: CryptoJS.AES.encrypt(req.body.password,process.env.SECRETCRYP).toString()})  
         await u.save()
         res.status(200).json({ Success: "Success" })
     }
