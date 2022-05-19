@@ -10,12 +10,11 @@ const Products = ({ products }) => {
             <section className="text-gray-600 body-font">
                 <div className="container px-5 py-6 mx-auto">
                     <div className="flex flex-wrap -m-4">
-                        {products.map((item)=>{
-                            
+                        {products.map((item)=>{                            
                             return<div key={item._id} className="lg:w-1/4 md:w-1/2 p-4 w-full">
                                 {/* use backtick `` to create string in href section */}
                                 <Link href={`/product/${item.slug}`}><a className="block relative h-48 rounded overflow-hidden">
-                                    <img alt="ecommerce" className="object-cover object-center w-full h-full block" src="https://4.imimg.com/data4/BI/MX/MY-5174293/laserjet-m1005-printer-1000x1000.jpg" />
+                                    <img alt="SK Computer Products" className="object-cover object-center w-full h-full block" src={item.img} />
                                 </a></Link>
                                 <div className="mt-4">
                                     <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{item.catogery}</h3>

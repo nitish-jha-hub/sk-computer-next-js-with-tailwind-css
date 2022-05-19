@@ -1,4 +1,6 @@
 const https = require('https');
+import connectDb from "../../middleware/mongoose"
+import Order from "../../modals/order"
 const PaytmChecksum = require('paytmchecksum');
 /*
 * import checksum generation utility
@@ -8,8 +10,28 @@ const PaytmChecksum = require('paytmchecksum');
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
     if (req.method == 'POST') {
+
+        //cheak if the cart is tempered or cart is fine[pending]
+
+
+        //cheak if the item in cart are out of stock[pending]
+
+        //cheak if the details are valid-- pending
+
+        // initiate an order corresponding to this order id
+        let order = new Order({
+            name: req.body.name,
+            email: req.body.email,
+            orderId: req.body.oid,
+            address: req.body.address,
+            amount: req.body.subTotal,
+            products: req.body.Cart
+        })
+        await order.save()
+
+        // insert an entry in the orders table with status as pending
         var paytmParams = {};
 
         paytmParams.body = {
@@ -40,8 +62,8 @@ export default async function handler(req, res) {
         var post_data = JSON.stringify(paytmParams);
 
 
-        const requestAsync = async()=>{
-            return new Promise((resolve, reject)=>{
+        const requestAsync = async () => {
+            return new Promise((resolve, reject) => {
                 var options = {
                     /* for Staging */
                     hostname: 'securegw-stage.paytm.in',
@@ -79,3 +101,4 @@ export default async function handler(req, res) {
 
     }
 }
+export default connectDb(handler);

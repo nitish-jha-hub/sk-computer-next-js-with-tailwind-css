@@ -2,7 +2,6 @@ import connectDb from "../../middleware/mongoose"
 import user from "../../modals/user"
 var CryptoJS = require("crypto-js");
 
-
 const handler = async (req, res) => {
     if (req.method == 'POST') {
         let {firstname, lastname , email} = req.body
