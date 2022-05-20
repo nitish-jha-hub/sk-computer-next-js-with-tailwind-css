@@ -3,14 +3,15 @@ import connectDb from "../../middleware/mongoose"
 import Order from "../../modals/order"
 
 const handler = async (req, res) => {
+  let order;
   // export default function handler(req, res) {
   // validate paytm checksum
   // Updates status into orders table ie database after checking the transection status
   if (req.body.STATUS == 'TXN_SUCCESS') {
-    let order =  await Order.findOneAndUpdate({ orderId: req.body.ORDERID }, { status: 'Paid', paymentInfo: JSON.stringify(req.body) });
+    order =  await Order.findOneAndUpdate({ orderId: req.body.ORDERID }, { status: 'Paid', paymentInfo: JSON.stringify(req.body) });
   }
   else if (req.body.STATUS == 'PENDING') {
-    let order =  await Order.findOneAndUpdate({ orderId: req.body.ORDERID }, { status: 'pending', paymentInfo: JSON.stringify(req.body) });
+    order =  await Order.findOneAndUpdate({ orderId: req.body.ORDERID }, { status: 'pending', paymentInfo: JSON.stringify(req.body) });
   }
   // Redirect user to order confirmation page
   // initiate shiping
