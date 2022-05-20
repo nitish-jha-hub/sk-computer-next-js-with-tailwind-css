@@ -9,7 +9,7 @@ const handler = async (req, res) => {
                 slug: req.body[i].slug,
                 desc: req.body[i].desc,
                 img: req.body[i].img,
-                catogery: req.body[i].catogery,
+                category: req.body[i].category,
                 size: req.body[i].size,
                 colour: req.body[i].colour,
                 price: req.body[i].price,
