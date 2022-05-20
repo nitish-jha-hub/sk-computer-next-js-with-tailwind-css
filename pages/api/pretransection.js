@@ -1,7 +1,9 @@
-const https = require('https');
+const https = require('https')
 import connectDb from "../../middleware/mongoose"
 import Order from "../../modals/order"
-const PaytmChecksum = require('paytmchecksum');
+const PaytmChecksum = require('paytmchecksum')
+import Product from "../../modals/product"
+
 /*
 * import checksum generation utility
 * You can get this utility from https://developer.paytm.com/docs/checksum/
@@ -14,7 +16,23 @@ const handler = async (req, res) => {
     if (req.method == 'POST') {
 
         //cheak if the cart is tempered or cart is fine[pending]
-
+        let product, sumTotal=0;
+        let cart = req.body.Cart;        
+        // console.log(cart)
+        for (let item in cart) {
+            // console.log(item)
+            sumTotal += cart[item].price * cart[item].qty
+            product = await Product.findOne({slug: item})
+            // console.log(product)
+            if(product.price != cart[item].price) {
+                res.status(200).json({success: false, "error": "The price of some item in your cart has changed"})
+                return                
+            }
+            if(sumTotal !== req.body.subTotal){
+                res.status(200).json({success:false, "error":true})
+                return
+            }
+        } 
 
         //cheak if the item in cart are out of stock[pending]
 
@@ -86,8 +104,12 @@ const handler = async (req, res) => {
                     });
 
                     post_res.on('end', function () {
-                        console.log('Response: ', response);
-                        resolve(JSON.parse(response).body);
+                        // console.log('Response: ', response);
+                        // response.success = true
+                        //resolve(JSON.parse(response).body )
+                        let ress = JSON.parse(response).body
+                        ress.success = true
+                        resolve(ress)
                     });
                 });
 

@@ -10,6 +10,9 @@ const handler = async (req, res) => {
   if (req.body.STATUS == 'TXN_SUCCESS') {
     order =  await Order.findOneAndUpdate({ orderId: req.body.ORDERID }, { status: 'Paid', paymentInfo: JSON.stringify(req.body) });
   }
+  else if (req.body.STATUS == 'TXN_FAILURE') {
+    order =  await Order.findOneAndUpdate({ orderId: req.body.ORDERID }, { status: 'Txn_Failed', paymentInfo: JSON.stringify(req.body) });
+  }
   else if (req.body.STATUS == 'PENDING') {
     order =  await Order.findOneAndUpdate({ orderId: req.body.ORDERID }, { status: 'pending', paymentInfo: JSON.stringify(req.body) });
   }

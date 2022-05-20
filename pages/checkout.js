@@ -3,8 +3,10 @@ import { AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai'
 import Head from 'next/head'
 import Script from 'next/script'
 import { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const Checkout = ({ Cart, addToCart, removeFromCart, subTotal }) => {
+const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
@@ -14,7 +16,7 @@ const Checkout = ({ Cart, addToCart, removeFromCart, subTotal }) => {
   const [city, setCity] = useState('')
   const [disabled, setDisabled] = useState(true)
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     if (e.target.name == 'name') {
       setName(e.target.value)
     }
@@ -26,6 +28,22 @@ const Checkout = ({ Cart, addToCart, removeFromCart, subTotal }) => {
     }
     else if (e.target.name == 'pincode') {
       setPincode(e.target.value)
+      if (e.target.value.length == 6) {
+        let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincodes`)
+        let pinJson = await pins.json()
+        if (Object.keys(pinJson).includes(e.target.value)) {
+          setState(pinJson[e.target.value][1])
+          setCity(pinJson[[e.target.value]][0])
+        }
+        else {
+          setState('')
+          setCity('')
+        }
+      }
+      else {
+        setState('')
+        setCity('')
+      }
     }
     else if (e.target.name == 'address') {
       setAddress(e.target.value)
@@ -44,7 +62,7 @@ const Checkout = ({ Cart, addToCart, removeFromCart, subTotal }) => {
   const initiatepayment = async () => {
     let oid = Math.floor(Math.random() * Date.now());
     //get a transection tocken
-    const data = { Cart, subTotal, oid, email: email, name, address, pincode, phone}; //dending data to api ie-pretransection
+    const data = { Cart, subTotal, oid, email: email, name, address, pincode, phone }; //dending data to api ie-pretransection
     let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pretransection`, {
       method: 'POST', // or 'PUT'
       headers: {
@@ -53,37 +71,51 @@ const Checkout = ({ Cart, addToCart, removeFromCart, subTotal }) => {
       body: JSON.stringify(data),
     })
     let txnRes = await a.json()
-    // console.log(txnToken);
-    let txnToken = txnRes.txnToken
+    if (txnRes.success) {
+      // console.log(txnToken);
+      let txnToken = txnRes.txnToken
 
-    var config = {
-      "root": "",
-      "flow": "DEFAULT",
-      "data": {
-        "orderId": oid, /* update order id */
-        "token": txnToken, /* update token value */
-        "tokenType": "TXN_TOKEN",
-        "amount": subTotal /* update amount */
-      },
-      "handler": {
-        "notifyMerchant": function (eventName, data) {
-          console.log("notifyMerchant handler function called");
-          console.log("eventName => ", eventName);
-          console.log("data => ", data);
+      var config = {
+        "root": "",
+        "flow": "DEFAULT",
+        "data": {
+          "orderId": oid, /* update order id */
+          "token": txnToken, /* update token value */
+          "tokenType": "TXN_TOKEN",
+          "amount": subTotal /* update amount */
+        },
+        "handler": {
+          "notifyMerchant": function (eventName, data) {
+            console.log("notifyMerchant handler function called");
+            console.log("eventName => ", eventName);
+            console.log("data => ", data);
+          }
         }
-      }
-    };
+      };
 
 
-    // initialze configuration using init method 
-    window.Paytm.CheckoutJS.init(config).then(function onSuccess() {
-      // after successfully updating configuration, invoke JS Checkout
-      window.Paytm.CheckoutJS.invoke();
-    }).catch(function onError(error) {
-      console.log("error => ", error);
-    });
+      // initialze configuration using init method 
+      window.Paytm.CheckoutJS.init(config).then(function onSuccess() {
+        // after successfully updating configuration, invoke JS Checkout
+        window.Paytm.CheckoutJS.invoke();
+      }).catch(function onError(error) {
+        console.log("error => ", error);
+      });
 
-
+    }
+    else{
+      console.log(txnRes.error)
+      clearCart()
+      toast.error(txnRes.error, {
+        position: "top-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
+    }
   }
 
   return (
@@ -119,11 +151,11 @@ const Checkout = ({ Cart, addToCart, removeFromCart, subTotal }) => {
           <div className='flex'>
             <div className="relative mb-2 w-1/2 mr-2">
               <label htmlFor="city" className="leading-7 text-sm text-gray-600">City</label>
-              <input value={city} readOnly={true} type="text" id="city" name="city" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              <input onChange={handleChange} value={city} type="text" id="city" name="city" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
             </div>
             <div className="relative mb-2 w-1/2">
               <label htmlFor="state" className="leading-7 text-sm text-gray-600">State</label>
-              <input value={state} readOnly={true} type="text" id="state" name="state" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              <input onChange={handleChange} value={state} type="text" id="state" name="state" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
             </div>
           </div>
         </div>
@@ -147,7 +179,7 @@ const Checkout = ({ Cart, addToCart, removeFromCart, subTotal }) => {
               </ol>
               <div className='font-bold text-xl ml-3 text-slate-600'>
                 Subtotal= ₹{subTotal}
-              </div>
+              </div>               
             </div >
           </div>
         </div>

@@ -18,7 +18,7 @@ const Orders = () => {
       })
       let res = await a.json()
       setOrders(res.orders)
-      console.log(orders)
+      // console.log(orders)
     }
     if (!localStorage.getItem('token')) {
       router.push('/')
