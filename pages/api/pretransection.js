@@ -42,12 +42,12 @@ const handler = async (req, res) => {
                 return
             }
         }
-        //cheak if the details are valid-- pending and || !Number.isInteger(req.body.pincode)
-        if (req.body.phone.length !==10 ) {
+        //cheak if the details are valid-- pending 
+        if (req.body.phone.length !==10 || !Number.isInteger(Number(req.body.phone))){
             res.status(200).json({ success: false, "error": "Please Enter Your 10 Digit Phone Number", cartClear: false })
             return
         }
-        if (req.body.pincode.length !==6 ) {
+        if (req.body.pincode.length !==6 || !Number.isInteger(Number(req.body.pincode))){
             res.status(200).json({ success: false, "error": "Please Enter valid Area Pincode", cartClear: false })
             return
         }

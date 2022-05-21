@@ -66,7 +66,7 @@ const Header = ({ logout, user, Cart, addToCart, removeFromCart, clearCart, subT
                     {user.value && <VscAccount className='mx-2 text-3xl text-slate-800' />}
                     {dropdown && <div onMouseOver={() => { setDropdown(true) }} onMouseLeave={() => { setDropdown(false) }} className='absolute bg-orange-300 p-2 font-bold rounded-xl drop-shadow-2xl'><ul>
                         <Link href="/myaccount"><a><li className='hover:text-slate-100'>Account</li></a></Link>
-                        <Link href="/orders"><a><li className='hover:text-slate-100'>Orders</li></a></Link>
+                        <Link href="/orders"><a><li className='hover:text-slate-100'>MyOrders</li></a></Link>
                         <li onClick={logout} className='hover:text-slate-100 cursor-pointer'>LogOut</li>
                     </ul></div>}
                 </div>

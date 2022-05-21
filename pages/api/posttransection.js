@@ -1,12 +1,32 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import connectDb from "../../middleware/mongoose";
 import Order from "../../modals/order";
 import product from "../../modals/product";
+import PaytmChecksum from "paytmchecksum";
 
 const handler = async (req, res) => {
   let order;
-  // export default function handler(req, res) {
   // validate paytm checksum
+  var paytmChecksum = "";
+  var paytmParams = {};
+
+  const received_data = req.body
+  for (var key in received_data) {
+    if (key == "CHECKSUMHASH") {
+      paytmChecksum = received_data[key];
+    } else {
+      paytmParams[key] = received_data[key];
+    }
+  }
+
+  var isValidChecksum = PaytmChecksum.verifySignature(paytmParams, process.env.PAYTM_KEY, paytmChecksum);
+  if (!isValidChecksum) {
+    console.log("Checksum Mismatched");
+    res.status(500).send("Some Error Occurred")
+    return
+  }
+
+
+  // export default function handler(req, res) {
   // Updates status into orders table ie database after checking the transection status
   if (req.body.STATUS == 'TXN_SUCCESS') {
     order = await Order.findOneAndUpdate({ orderId: req.body.ORDERID }, { status: 'Paid', paymentInfo: JSON.stringify(req.body) })

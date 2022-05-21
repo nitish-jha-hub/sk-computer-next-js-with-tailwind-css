@@ -2,13 +2,16 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import mongoose from 'mongoose'
 import Order from '../modals/order'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const MyOrder = ({ order, clearCart }) => {
     const product = order.products;
     const router = useRouter()
+    const [date, setDate] = useState()
     useEffect(() => {
-    if(router.query.clearCart == 1){
+        const dinaak = new Date(order.createdAt)
+        setDate(dinaak)
+        if(router.query.clearCart == 1){
         clearCart()
     }
     }, [])
@@ -22,8 +25,9 @@ const MyOrder = ({ order, clearCart }) => {
                         <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">SK Computer &#38; Printers</h2>
                             <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">Order ID: #{order.orderId}</h1>
-                            <p>Your Order has been Placed Successfully</p>
-                            <p>Your Payment status is <span className='text-orange-400'>{order.status}</span></p>
+                            <p>Your order has been Placed Successfully</p>
+                            <p className='my-2'>Your order has been Placed on: <span className='text-black'>{date && date.toLocaleDateString("hi-IN",{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span></p>
+                            <p>Your Payment status is <span className='text-orange-400 font-bold'>{order.status}</span></p>
 
                             <div className="flex text-center justify-between mb-4">
                                 <a className="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">Items</a>

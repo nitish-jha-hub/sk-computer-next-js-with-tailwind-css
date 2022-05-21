@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }) {
     router.events.on('routeChangeComplete', () => {
       setProgress(100)
     })
-    console.log("cheak useEfect from app");
+    // console.log("cheak useEfect from app");
     try {
       if (localStorage.getItem("Cart")) {
         setCart(JSON.parse(localStorage.getItem("Cart")))
