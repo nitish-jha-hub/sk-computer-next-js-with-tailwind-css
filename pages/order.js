@@ -2,9 +2,17 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import mongoose from 'mongoose'
 import Order from '../modals/order'
+import { useEffect } from 'react'
 
-const MyOrder = ({ order }) => {
+const MyOrder = ({ order, clearCart }) => {
     const product = order.products;
+    const router = useRouter()
+    useEffect(() => {
+    if(router.query.clearCart == 1){
+        clearCart()
+    }
+    }, [])
+    
     // console.log(order)
     return (
         <div className='min-h-full'>

@@ -2,7 +2,7 @@ import React from 'react'
 import { AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai'
 import Head from 'next/head'
 import Script from 'next/script'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -15,8 +15,21 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
   const [state, setState] = useState('')
   const [city, setCity] = useState('')
   const [disabled, setDisabled] = useState(true)
+  const [user, setUser] = useState({ value: null })
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('myuser'))
+    // console.log(user)
+    if (user && user.token) {
+      setUser(user)
+      setEmail(user.email)
+      console.log(user.email)
+    }
+  }, [])
+
 
   const handleChange = async (e) => {
+    console.log(user)
     if (e.target.name == 'name') {
       setName(e.target.value)
     }
@@ -103,9 +116,11 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
       });
 
     }
-    else{
+    else {
       console.log(txnRes.error)
-      clearCart()
+      if(txnRes.cartClear){
+        clearCart()
+      }
       toast.error(txnRes.error, {
         position: "top-left",
         autoClose: 5000,
@@ -114,7 +129,7 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
     }
   }
 
@@ -132,7 +147,8 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
           </div>
           <div className="relative mb-2">
             <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
-            <input onChange={handleChange} value={email} type="email" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+            {user && user.token ? <input value={user.email} type="email" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={true} /> : <input onChange={handleChange} value={email} type="email" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />}
+
           </div>
           <div className="relative mb-2">
             <label htmlFor="address" className="leading-7 text-sm text-gray-600">Address</label>
@@ -150,7 +166,7 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
           </div>
           <div className='flex'>
             <div className="relative mb-2 w-1/2 mr-2">
-              <label htmlFor="city" className="leading-7 text-sm text-gray-600">City</label>
+              <label htmlFor="city" className="leading-7 text-sm text-gray-600">District</label>
               <input onChange={handleChange} value={city} type="text" id="city" name="city" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
             </div>
             <div className="relative mb-2 w-1/2">
@@ -179,7 +195,7 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
               </ol>
               <div className='font-bold text-xl ml-3 text-slate-600'>
                 Subtotal= ₹{subTotal}
-              </div>               
+              </div>
             </div >
           </div>
         </div>

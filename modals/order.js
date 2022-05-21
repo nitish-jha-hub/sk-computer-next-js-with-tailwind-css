@@ -13,6 +13,7 @@ const OrderSchema = new mongoose.Schema({
     address: {type: String, required: true},
     amount:{type: Number, require: true},
     status: {type: String, default:'initiated', required: true},
+    DeliveryStatus: {type: String, default:'Unshiped', required: true},
   },
   {timestamps: true});
 

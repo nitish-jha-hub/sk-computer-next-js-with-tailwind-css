@@ -11,9 +11,9 @@ const handler = async (req, res) => {
             let decryptedpass = bytes.toString(CryptoJS.enc.Utf8);
             if (req.body.email == account.email && req.body.password == decryptedpass) {
                 var token = jwt.sign({ email: account.email, firstname: account.firstname },process.env.SECRETJWT, {
-                    expiresIn: '1h'
+                    expiresIn: '30d'
                 });
-                res.status(200).json({ success: true, token })
+                res.status(200).json({ success: true, token, email:account.email })
             }
             else {
                 res.status(200).json({ success: false, error: "Invalid login details" })

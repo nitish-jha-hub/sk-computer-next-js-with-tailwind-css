@@ -15,28 +15,42 @@ import Product from "../../modals/product"
 const handler = async (req, res) => {
     if (req.method == 'POST') {
 
-        //cheak if the cart is tempered or cart is fine[pending]
-        let product, sumTotal=0;
-        let cart = req.body.Cart;        
+        //cheak if the cart is tempered or cart is fine
+        let product, sumTotal = 0;
+        let cart = req.body.Cart;
+        if (req.body.subTotal <= 0) {
+            res.status(200).json({ success: false, "error": "Your Cart is Empty.Please build your cart" })
+            return
+        }
         // console.log(cart)
         for (let item in cart) {
             // console.log(item)
             sumTotal += cart[item].price * cart[item].qty
-            product = await Product.findOne({slug: item})
+            product = await Product.findOne({ slug: item })
             // console.log(product)
-            if(product.price != cart[item].price) {
-                res.status(200).json({success: false, "error": "The price of some item in your cart has changed"})
-                return                
-            }
-            if(sumTotal !== req.body.subTotal){
-                res.status(200).json({success:false, "error":true})
+            //cheak if the item in cart are out of stock
+            if (product.availableQty < cart[item].qty) {
+                res.status(200).json({ success: false, "error": "Some item in your cart went out of stock plz try again",cartClear: false })
                 return
             }
-        } 
-
-        //cheak if the item in cart are out of stock[pending]
-
-        //cheak if the details are valid-- pending
+            if (product.price != cart[item].price) {
+                res.status(200).json({ success: false, "error": "The price of some item in your cart has changed", cartClear: true })
+                return
+            }
+            if (sumTotal !== req.body.subTotal) {
+                res.status(200).json({ success: false, "error": true, cartClear: true })
+                return
+            }
+        }
+        //cheak if the details are valid-- pending and || !Number.isInteger(req.body.pincode)
+        if (req.body.phone.length !==10 ) {
+            res.status(200).json({ success: false, "error": "Please Enter Your 10 Digit Phone Number", cartClear: false })
+            return
+        }
+        if (req.body.pincode.length !==6 ) {
+            res.status(200).json({ success: false, "error": "Please Enter valid Area Pincode", cartClear: false })
+            return
+        }
 
         // initiate an order corresponding to this order id
         let order = new Order({
@@ -45,7 +59,8 @@ const handler = async (req, res) => {
             orderId: req.body.oid,
             address: req.body.address,
             amount: req.body.subTotal,
-            products: req.body.Cart
+            products: req.body.Cart,
+            phone: req.body.phone
         })
         await order.save()
 
@@ -108,7 +123,8 @@ const handler = async (req, res) => {
                         // response.success = true
                         //resolve(JSON.parse(response).body )
                         let ress = JSON.parse(response).body
-                        ress.success = true
+                        ress.success = true,
+                        ress.cartClear= false
                         resolve(ress)
                     });
                 });
