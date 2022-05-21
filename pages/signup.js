@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useRouter from 'next/router'
@@ -14,10 +14,10 @@ const Signup = () => {
 
 
   useEffect(() => {
-    if (localStorage.getItem ('token') ) {
-        router.push('/')            
+    if (localStorage.getItem('token')) {
+      router.push('/')
     }
-}, [router])
+  }, [router])
 
   const handleChange = (e) => {
     if (e.target.name == 'firstname') {
@@ -46,21 +46,40 @@ const Signup = () => {
       body: JSON.stringify(data),
     })
     let response = await res.json()
-    // console.log(response)
+    console.log(response)
 
     setFirstname('')
     setLastname('')
     setEmail('')
     setPassword('')
-    toast.success('Success! your account created', {
-      position: "top-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
+    if (response.success) {
+      setTimeout(() => {
+        router.push(`${process.env.NEXT_PUBLIC_HOST}/login`)
+      }, 5000);
+      toast.success('Success! your account created', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
       });
+    }
+    else {
+      setTimeout(() => {
+        router.push(`${process.env.NEXT_PUBLIC_HOST}/login`)
+      }, 2000);
+      toast.error('User Already Exists', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
 
   }
 

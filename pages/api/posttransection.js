@@ -19,12 +19,14 @@ const handler = async (req, res) => {
 
   else if (req.body.STATUS == 'TXN_FAILURE') {
     order = await Order.findOneAndUpdate({ orderId: req.body.ORDERID }, { status: 'Txn_Failed', paymentInfo: JSON.stringify(req.body) });
+    res.redirect('/order?id=' + order._id, 200)
   }
   else if (req.body.STATUS == 'PENDING') {
     order = await Order.findOneAndUpdate({ orderId: req.body.ORDERID }, { status: 'pending', paymentInfo: JSON.stringify(req.body) });
+    res.redirect('/order?id=' + order._id, 200)
   }
   // Redirect user to order confirmation page
-  // initiate shiping
+  // initiate shiping  
   res.redirect('/order?clearCart=1&id=' + order._id, 200)
   // res.status(200).json({ body: req.body })
 }
