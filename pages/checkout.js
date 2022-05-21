@@ -23,13 +23,13 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
     if (user && user.token) {
       setUser(user)
       setEmail(user.email)
-      console.log(user.email)
+      // console.log(user.email)
     }
   }, [])
 
 
   const handleChange = async (e) => {
-    console.log(user)
+    // console.log(user)
     if (e.target.name == 'name') {
       setName(e.target.value)
     }
@@ -157,7 +157,7 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
           <div className='flex'>
             <div className="relative mb-2 w-1/2 mr-2">
               <label htmlFor="phone" className="leading-7 text-sm text-gray-600">Phone</label>
-              <input onChange={handleChange} value={phone} type="phone" id="phone" name="phone" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              <input onChange={handleChange} value={phone} type="phone" id="phone" name="phone" placeholder='Enter Your 10 Digit Mobile Number' className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
             </div>
             <div className="relative mb-2 w-1/2">
               <label htmlFor="pincode" className="leading-7 text-sm text-gray-600">Pincode</label>
