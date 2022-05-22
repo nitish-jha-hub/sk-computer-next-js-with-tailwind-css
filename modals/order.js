@@ -14,6 +14,7 @@ const OrderSchema = new mongoose.Schema({
     amount:{type: Number, require: true},
     status: {type: String, default:'initiated', required: true},
     DeliveryStatus: {type: String, default:'Unshiped', required: true},
+    transectionid: {type: String, default:" ",required: true }
   },
   {timestamps: true});
 

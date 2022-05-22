@@ -3,14 +3,7 @@ import connectDb from "../../middleware/mongoose"
 import Order from "../../modals/order"
 const PaytmChecksum = require('paytmchecksum')
 import Product from "../../modals/product"
-
-/*
-* import checksum generation utility
-* You can get this utility from https://developer.paytm.com/docs/checksum/
-*/
-// const PaytmChecksum = require('./PaytmChecksum');
-
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import pincodes from '../../pincodes.json'
 
 const handler = async (req, res) => {
     if (req.method == 'POST') {
@@ -30,7 +23,7 @@ const handler = async (req, res) => {
             // console.log(product)
             //cheak if the item in cart are out of stock
             if (product.availableQty < cart[item].qty) {
-                res.status(200).json({ success: false, "error": "Some item in your cart went out of stock plz try again",cartClear: false })
+                res.status(200).json({ success: false, "error": "Some item in your cart went out of stock plz try again", cartClear: true })
                 return
             }
             if (product.price != cart[item].price) {
@@ -38,17 +31,23 @@ const handler = async (req, res) => {
                 return
             }
             if (sumTotal !== req.body.subTotal) {
-                res.status(200).json({ success: false, "error": true, cartClear: true })
+                res.status(200).json({ success: false, "error": "sumtotal is not equal to subtotal", cartClear: true })
                 return
             }
         }
-        //cheak if the details are valid-- pending 
-        if (req.body.phone.length !==10 || !Number.isInteger(Number(req.body.phone))){
+        
+        //cheak if the details are valid
+        if (req.body.phone.length !== 10 || !Number.isInteger(Number(req.body.phone))) {
             res.status(200).json({ success: false, "error": "Please Enter Your 10 Digit Phone Number", cartClear: false })
             return
         }
-        if (req.body.pincode.length !==6 || !Number.isInteger(Number(req.body.pincode))){
+        if (req.body.pincode.length !== 6 || !Number.isInteger(Number(req.body.pincode))) {
             res.status(200).json({ success: false, "error": "Please Enter valid Area Pincode", cartClear: false })
+            return
+        }        
+        //cheak if the pin code is servicable or not
+        if (!Object.keys(pincodes).includes(req.body.pincode)) {
+            res.status(200).json({ success: false, "error": "Pincode Not Serviceable", cartClear: false })
             return
         }
 
@@ -123,8 +122,8 @@ const handler = async (req, res) => {
                         // response.success = true
                         //resolve(JSON.parse(response).body )
                         let ress = JSON.parse(response).body
-                        ress.success = true,
-                        ress.cartClear= false
+                        ress.success = true
+                        ress.cartClear = false
                         resolve(ress)
                     });
                 });

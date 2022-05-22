@@ -84,8 +84,9 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
       body: JSON.stringify(data),
     })
     let txnRes = await a.json()
+    console.log(txnRes)
     if (txnRes.success) {
-      // console.log(txnToken);
+      console.log(txnToken);
       let txnToken = txnRes.txnToken
 
       var config = {
