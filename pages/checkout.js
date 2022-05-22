@@ -18,18 +18,46 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
   const [user, setUser] = useState({ value: null })
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('myuser'))
-    // console.log(user)
-    if (user && user.token) {
-      setUser(user)
-      setEmail(user.email)
-      // console.log(user.email)
+    const myuser = JSON.parse(localStorage.getItem('myuser'))
+    if (myuser && myuser.token) {
+      setUser(myuser)
+      setEmail(myuser.email)
+      fetchData(myuser.token)     
     }
   }, [])
 
+  const fetchData = async (token) => {
+    let data = { token: token }
+    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    let res = await a.json()    
+    setName(res.firstname)
+    setAddress(res.address)
+    setPhone(res.phone)
+    setPincode(res.pincode)
+    getPinCode(res.pincode)
+  }
+
+  const getPinCode=async(pin)=>{
+    let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincodes`)
+    let pinJson = await pins.json()
+    if (Object.keys(pinJson).includes(pin)) {
+      setState(pinJson[pin][1])
+      setCity(pinJson[[pin]][0])
+    }
+    else {
+      setState('')
+      setCity('')
+    }
+  }
+
 
   const handleChange = async (e) => {
-    // console.log(user)
     if (e.target.name == 'name') {
       setName(e.target.value)
     }
@@ -42,16 +70,7 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
     else if (e.target.name == 'pincode') {
       setPincode(e.target.value)
       if (e.target.value.length == 6) {
-        let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincodes`)
-        let pinJson = await pins.json()
-        if (Object.keys(pinJson).includes(e.target.value)) {
-          setState(pinJson[e.target.value][1])
-          setCity(pinJson[[e.target.value]][0])
-        }
-        else {
-          setState('')
-          setCity('')
-        }
+        getPinCode(e.target.value)
       }
       else {
         setState('')
@@ -68,10 +87,7 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
       else { setDisabled(true) }
     }, 100);
   }
-  // console.log(name, email, phone, pincode, address, disabled);
-
-
-
+  
   const initiatepayment = async () => {
     let oid = Math.floor(Math.random() * Date.now());
     //get a transection tocken
@@ -119,7 +135,7 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
     }
     else {
       console.log(txnRes.error)
-      if(txnRes.cartClear){
+      if (txnRes.cartClear) {
         clearCart()
       }
       toast.error(txnRes.error, {
@@ -153,7 +169,7 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
           </div>
           <div className="relative mb-2">
             <label htmlFor="address" className="leading-7 text-sm text-gray-600">Address</label>
-            <textarea onChange={handleChange} id="address" name="address" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-24 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
+            <textarea onChange={handleChange} value={address} id="address" name="address" className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 h-24 text-base outline-none text-gray-700 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out"></textarea>
           </div>
           <div className='flex'>
             <div className="relative mb-2 w-1/2 mr-2">

@@ -21,16 +21,14 @@ function MyApp({ Component, pageProps }) {
     })
     router.events.on('routeChangeComplete', () => {
       setProgress(100)
-    })
-    // console.log("cheak useEfect from app");
+    })    
     try {
       if (localStorage.getItem("Cart")) {
         setCart(JSON.parse(localStorage.getItem("Cart")))
         // if save cart is cart then subt will show subtotal zero on page reload
         saveCart(JSON.parse(localStorage.getItem("Cart")))
       }
-    } catch (error) {
-      // console.log(Error)
+    } catch (error) {      
       localStorage.clear()
     }
     const myuser = JSON.parse(localStorage.getItem("myuser"))
