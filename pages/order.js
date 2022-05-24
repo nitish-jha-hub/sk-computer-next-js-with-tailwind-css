@@ -8,15 +8,15 @@ const MyOrder = ({ order, clearCart }) => {
     const product = order.products;
     const router = useRouter()
     const [date, setDate] = useState()
+    
     useEffect(() => {
         const dinaak = new Date(order.createdAt)
         setDate(dinaak)
         if(router.query.clearCart == 1){
         clearCart()
     }
-    }, [])
+    }, [])    
     
-    // console.log(order)
     return (
         <div className='min-h-full'>
             <section className="text-gray-600 body-font overflow-hidden">

@@ -3,8 +3,7 @@ import Link from 'next/link'
 import product from '../modals/product'
 import mongoose from "mongoose"
 
-const Products = ({ products }) => {
-    // console.log(products)
+const Products = ({ products }) => {    
     return (
         <div className='min-h-screen'>
             <section className="text-gray-600 body-font">

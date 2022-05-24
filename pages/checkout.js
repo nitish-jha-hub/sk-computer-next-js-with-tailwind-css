@@ -100,11 +100,9 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
       body: JSON.stringify(data),
     })
     let txnRes = await a.json()
-    console.log(txnRes)
-    if (txnRes.success) {
-      console.log(txnToken);
+    
+    if (txnRes.success) {      
       let txnToken = txnRes.txnToken
-
       var config = {
         "root": "",
         "flow": "DEFAULT",

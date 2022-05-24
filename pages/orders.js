@@ -17,8 +17,7 @@ const Orders = () => {
         body: JSON.stringify({ token: JSON.parse(localStorage.getItem('myuser')).token}),
       })
       let res = await a.json()
-      setOrders(res.orders)
-      // console.log(orders)
+      setOrders(res.orders)      
     }
     if (!localStorage.getItem('myuser')) {
       router.push('/')
@@ -26,7 +25,7 @@ const Orders = () => {
     else {
       fetchorders()
     }
-  }, [])
+  }, [router])
 
   return (
     <div className='min-h-screen'>

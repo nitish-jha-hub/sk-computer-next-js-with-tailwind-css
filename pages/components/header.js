@@ -10,9 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react'
 
-
-const Header = ({ logout, user, Cart, addToCart, removeFromCart, clearCart, subTotal }) => {
-    // console.log(Cart, addToCart, removeFromCart, clearCart, subTotal);
+const Header = ({ logout, user, Cart, addToCart, removeFromCart, clearCart, subTotal }) => {    
     const toggleCart = () => {
         if (ref.current.classList.contains('translate-x-full')) {
             ref.current.classList.remove('translate-x-full')

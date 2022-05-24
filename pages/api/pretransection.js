@@ -28,8 +28,6 @@ const handler = async (req, res) => {
                 return
             }
         }
-        console.log(sumTotal)
-        console.log(req.body.subTotal)
         if (sumTotal !== req.body.subTotal) {
             res.status(200).json({ success: false, "error": "The price of some item in your cart has changed", cartClear: true })
             return

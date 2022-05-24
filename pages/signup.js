@@ -51,8 +51,6 @@ const Signup = () => {
         body: JSON.stringify(data),
       })
       let response = await res.json()
-      console.log(response)
-
       setFirstname('')
       setLastname('')
       setEmail('')
@@ -61,8 +59,8 @@ const Signup = () => {
 
       if (response.success) {
         setTimeout(() => {
-          router.push(`${process.env.NEXT_PUBLIC_HOST}/login`)
-        }, 5000);
+          router.push(`${process.env.NEXT_PUBLIC_HOST}login`)
+        }, 2000);
         toast.success('Success! your account created', {
           position: "top-center",
           autoClose: 2000,
@@ -75,7 +73,7 @@ const Signup = () => {
       }
       else {
         setTimeout(() => {
-          router.push(`${process.env.NEXT_PUBLIC_HOST}/login`)
+          router.push(`${process.env.NEXT_PUBLIC_HOST}login`)
         }, 2000);
         toast.error('User Already Exists', {
           position: "top-center",
