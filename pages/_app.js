@@ -35,6 +35,7 @@ function MyApp({ Component, pageProps }) {
     if (myuser) {
       setUser({ value: myuser.token, email: myuser.email })
     }
+    setKey(Math.random())
     // setKey(Math.random()) //to rerender element//throw a react state update error in console. ie-can't upate state of unmounted components
 
   }, [router.query])
