@@ -2,7 +2,7 @@ import '../styles/globals.css'
 import Header from './components/header'
 import Footer from './components/footer'
 import { useState, useEffect } from 'react'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
 import LoadingBar from 'react-top-loading-bar'
@@ -21,22 +21,22 @@ function MyApp({ Component, pageProps }) {
     })
     router.events.on('routeChangeComplete', () => {
       setProgress(100)
-    })    
+    })
     try {
       if (localStorage.getItem("Cart")) {
         setCart(JSON.parse(localStorage.getItem("Cart")))
         // if save cart is cart then subt will show subtotal zero on page reload
         saveCart(JSON.parse(localStorage.getItem("Cart")))
       }
-    } catch (error) {      
+    } catch (error) {
       localStorage.clear()
     }
     const myuser = JSON.parse(localStorage.getItem("myuser"))
     if (myuser) {
-      setUser({ value: myuser.token, email:myuser.email })
+      setUser({ value: myuser.token, email: myuser.email })
     }
     setKey(Math.random()) //to rerender element
-    
+
   }, [router.query])
 
   const logout = () => {
@@ -57,6 +57,20 @@ function MyApp({ Component, pageProps }) {
     }
     setSubTotal(subt);
   }
+
+  const BuyNow = (itemCode, price, name, size, varient) => {
+    let myCart = Cart;
+    if (itemCode in Cart) {
+      myCart[itemCode].qty = Cart[itemCode].qty + 1
+      router.push(`${process.env.NEXT_PUBLIC_HOST}checkout`)
+    }
+    else {
+      myCart[itemCode] = { qty: 1, price, name, size, varient }
+      router.push(`${process.env.NEXT_PUBLIC_HOST}checkout`)
+    }
+    saveCart(myCart)
+  }
+
 
   const addToCart = (itemCode, qty, price, name, size, varient) => {
     let myCart = Cart;
@@ -112,7 +126,7 @@ function MyApp({ Component, pageProps }) {
       onLoaderFinished={() => setProgress(0)}
     />
     {key && <Header logout={logout} user={user} key={key} Cart={Cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />}
-    {<Component Cart={Cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />}
+    {<Component Cart={Cart} BuyNow={BuyNow} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />}
     <Footer />
   </>
 }

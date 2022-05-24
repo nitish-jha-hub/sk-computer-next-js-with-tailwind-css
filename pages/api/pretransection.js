@@ -15,25 +15,24 @@ const handler = async (req, res) => {
             res.status(200).json({ success: false, "error": "Your Cart is Empty.Please build your cart" })
             return
         }
-        // console.log(cart)
-        for (let item in cart) {
-            // console.log(item)
-            sumTotal += cart[item].price * cart[item].qty
-            product = await Product.findOne({ slug: item })
-            // console.log(product)
-            //cheak if the item in cart are out of stock
-            if (product.availableQty < cart[item].qty) {
+        
+        for (let items in cart) {            
+            sumTotal += cart[items].price * cart[items].qty            
+            product = await Product.findOne({ slug: items })            
+            if (product.availableQty < cart[items].qty) {
                 res.status(200).json({ success: false, "error": "Some item in your cart went out of stock plz try again", cartClear: true })
                 return
             }
-            if (product.price != cart[item].price) {
+            if (product.price != cart[items].price) {
                 res.status(200).json({ success: false, "error": "The price of some item in your cart has changed", cartClear: true })
                 return
             }
-            if (sumTotal !== req.body.subTotal) {
-                res.status(200).json({ success: false, "error": "sumtotal is not equal to subtotal", cartClear: true })
-                return
-            }
+        }
+        console.log(sumTotal)
+        console.log(req.body.subTotal)
+        if (sumTotal !== req.body.subTotal) {
+            res.status(200).json({ success: false, "error": "The price of some item in your cart has changed", cartClear: true })
+            return
         }
         
         //cheak if the details are valid

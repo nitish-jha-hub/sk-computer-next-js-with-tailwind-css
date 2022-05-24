@@ -37,18 +37,18 @@ const about = () => {
       <div className="flex flex-wrap justify-evenly mt-20">
         <div className="text-center">
           <Image className="rounded-full" src="/assets/Nitish-Jha.3940cec7.3940cec7.jpg" width={350} height={350} alt="Nitish jha(CEO of SK Computer)"/>
-          <h5>Nitish Jha</h5>
-          <p>CEO and Head Devloper (Coder)</p>
+          <h5 className='font-semibold font-serif italic'>Nitish Jha</h5>
+          <p>CEO &amp; Frontend Developer</p>
         </div>
         <div className="text-center">
           <Image className="rounded-full" src="/assets/rishabh-raj.ad8040ce.ad8040ce.jpg" width={350} height={350} alt="Rishabh Raj" />
-          <h5>Rishabh Raj</h5>
-          <p>Programmer and Gamer</p>
+          <h5 className='font-semibold font-serif italic'>Rishabh Raj</h5>
+          <p>Programmer &amp; Backend Developer</p>
         </div>
         <div className="text-center items-center">
           <Image className="rounded-full" src="/ujjwal.jpg" width={350} height={350} alt="Pranav Jha" />
-          <Link href={"/ujjwal"} passHref><h5>ujjwal</h5></Link>
-          <p>Motivator</p>
+          <h5 className='font-semibold font-serif italic'>Ujjwal</h5>
+          <p>Database Administrator</p>
         </div>
       </div>
 

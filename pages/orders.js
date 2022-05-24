@@ -31,9 +31,8 @@ const Orders = () => {
   return (
     <div className='min-h-screen'>
       <section className="text-gray-600 body-font overflow-hidden">
-        <div className="container px-5 py-24 mx-auto">
-
-          <div className="w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+        <div className="container px-5 mx-auto">
+          <div className="w-full my-8 ">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">SK Computer &#38; Printers</h2>
             <h2 className="title-font text-gray-800 font-bold text-center mb-3 bg-slate-300 tracking-widest">My Orders</h2>
 
@@ -48,7 +47,7 @@ const Orders = () => {
                 <span className="text-gray-500">{item.orderId}</span>
                 <span className="text-gray-500">{item.email}</span>
                 <span className="text-gray-900">{item.amount}</span>
-                <Link href={'/order?id=' + item._id}><a>Details</a></Link>
+                <Link href={'/order?id=' + item._id}><a className='text-orange-600 font-serif font-semibold'>Details</a></Link>
               </div>
             })}
             

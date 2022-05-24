@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useRouter from 'next/router'
+import Error from 'next/error';
 
 const Signup = () => {
   const [firstname, setFirstname] = useState('')
   const [lastname, setLastname] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [cpassword, setCpassword] = useState('')
   const router = useRouter
 
 
@@ -32,57 +34,74 @@ const Signup = () => {
     if (e.target.name == 'password') {
       setPassword(e.target.value)
     }
-
+    if (e.target.name == 'cpassword') {
+      setCpassword(e.target.value)
+    }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const data = { firstname, lastname, email, password }
-    let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signup`, {
-      method: 'POST', // or 'PUT'
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-    let response = await res.json()
-    console.log(response)
+    if (password == cpassword) {
+      const data = { firstname, lastname, email, password }
+      let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signup`, {
+        method: 'POST', // or 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      let response = await res.json()
+      console.log(response)
 
-    setFirstname('')
-    setLastname('')
-    setEmail('')
-    setPassword('')
-    if (response.success) {
-      setTimeout(() => {
-        router.push(`${process.env.NEXT_PUBLIC_HOST}/login`)
-      }, 5000);
-      toast.success('Success! your account created', {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      setFirstname('')
+      setLastname('')
+      setEmail('')
+      setPassword('')
+      setCpassword('')
+
+      if (response.success) {
+        setTimeout(() => {
+          router.push(`${process.env.NEXT_PUBLIC_HOST}/login`)
+        }, 5000);
+        toast.success('Success! your account created', {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
+      else {
+        setTimeout(() => {
+          router.push(`${process.env.NEXT_PUBLIC_HOST}/login`)
+        }, 2000);
+        toast.error('User Already Exists', {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
     }
     else {
-      setTimeout(() => {
-        router.push(`${process.env.NEXT_PUBLIC_HOST}/login`)
-      }, 2000);
-      toast.error('User Already Exists', {
-        position: "top-center",
-        autoClose: 2000,
+      toast.error("New Password and Confirm password is not same", {
+        position: "top-left",
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
       });
+      setPassword('')
+      setCpassword('')
     }
-
   }
-
   return (
     <div>
       <div className="font-mono ">
@@ -144,7 +163,18 @@ const Signup = () => {
                         placeholder="******************"
                       />
                       <p className="text-xs italic text-red-500">Please choose a password.</p>
-
+                    </div>
+                    <div className="mb-4 md:mr-2 md:mb-0">
+                      <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="cpassword">
+                        Confirm Password
+                      </label>
+                      <input value={cpassword} name="cpassword" onChange={handleChange}
+                        className="w-full px-3 py-2 mb-3 text-sm leading-tight text-gray-700 border border-red-500 rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        id="cpassword"
+                        type="password"
+                        placeholder="******************"
+                      />
+                      <p className="text-xs italic text-red-500">Please Re-Enter password.</p>
                     </div>
                   </div>
                   <div className="mb-6 text-center">

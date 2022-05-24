@@ -178,7 +178,7 @@ const Myaccount = () => {
           </div>
         </div>
         <div className='items-center text-center'>
-          <button onClick={handleUserSubmit} className="disabled:bg-orange-300 flex mx-auto mt-2 text-white bg-orange-600 border-0 py-2 px-8 focus:outline-none hover:bg-orange-700 rounded text-lg">Submit</button>
+          <button onClick={handleUserSubmit} className="disabled:bg-orange-300 flex mx-auto mt-2 text-white bg-orange-600 border-0 py-2 px-8 focus:outline-none hover:bg-orange-700 rounded text-lg">Update Details</button>
         </div>
       </div>
       <div>

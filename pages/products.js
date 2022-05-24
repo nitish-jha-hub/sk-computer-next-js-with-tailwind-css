@@ -6,7 +6,7 @@ import mongoose from "mongoose"
 const Products = ({ products }) => {
     // console.log(products)
     return (
-        <div>
+        <div className='min-h-screen'>
             <section className="text-gray-600 body-font">
                 <div className="container px-5 py-6 mx-auto">
                     <div className="flex flex-wrap -m-4">

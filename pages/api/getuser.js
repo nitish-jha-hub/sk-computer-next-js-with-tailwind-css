@@ -7,8 +7,8 @@ const handler = async (req, res)=>{
         let token = req.body.token
         const user = jsonwebtoken.verify(token, process.env.SECRETJWT);        
         let dbuser = await User.findOne({email:user.email})        
-        const { firstname, lastname, email, address, pincode, phone } = dbuser
-        res.status(200).json({ firstname, lastname, email, address, pincode,phone })
+        const {firstname,lastname,email,address,pincode,phone} = dbuser
+        res.status(200).json({firstname,lastname,email,address,pincode,phone})
     }
     else{
         res.status(400).json({ error: "error"})

@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import Product from '../../modals/product'
 import Error from 'next/error';
 
-const Post = ({ addToCart, product, error }) => {
+const Post = ({ addToCart, BuyNow, product, error }) => {
   // console.log(product);
   const router = useRouter()
   const { slug } = router.query
@@ -131,7 +131,7 @@ const Post = ({ addToCart, product, error }) => {
                 {product.availableQty > 0 && <span className="title-font font-medium text-2xl text-gray-900">₹{product.price}</span>}
                 {product.availableQty <= 0 && <span className="title-font font-medium text-2xl text-gray-900"> Out Of Stock</span>}
                 {/*product details */}
-                <button disabled={product.availableQty <= 0} className='disabled:bg-orange-300 flex ml-auto text-white bg-orange-600 border-0 py-2 px-6 focus:outline-none hover:bg-orange-700 rounded' onClick={() => addToCart(slug, 1, product.price, product.tittle, product.size, product.colour)}>Buy Now</button>
+                <button disabled={product.availableQty <= 0} onClick={() => BuyNow(slug, product.price, product.tittle, product.size, product.colour)} className='disabled:bg-orange-300 flex ml-auto text-white bg-orange-600 border-0 py-2 px-6 focus:outline-none hover:bg-orange-700 rounded'>Buy Now</button>
                 <button disabled={product.availableQty <= 0} onClick={() => addToCart(slug, 1, product.price, product.tittle, product.size, product.colour)} className="disabled:bg-orange-300 flex ml-auto text-white bg-orange-600 border-0 py-2 px-6 focus:outline-none hover:bg-orange-700 rounded">Add to Cart</button>
                 <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-600 ml-4">
                   <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
