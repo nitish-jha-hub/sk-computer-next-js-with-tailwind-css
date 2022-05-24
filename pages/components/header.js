@@ -93,7 +93,7 @@ const Header = ({ logout, user, Cart, addToCart, removeFromCart, clearCart, subT
                     Subtotal= ₹{subTotal}
                 </div>
                 <div className='flex justify-center'>
-                    <Link href="/checkout"><button disabled={Object.keys(Cart).length === 0} className="disabled:bg-orange-300 flex mt-6 text-white bg-orange-600 border-0 py-2 px-3 focus:outline-none hover:bg-orange-700 rounded"><BsFillBagCheckFill className='m-1' />Checkout </button></Link>
+                    <Link href="/checkout"><a><button disabled={Object.keys(Cart).length === 0} className="disabled:bg-orange-300 flex mt-6 text-white bg-orange-600 border-0 py-2 px-3 focus:outline-none hover:bg-orange-700 rounded"><BsFillBagCheckFill className='m-1' />Checkout </button></a></Link>
                     <button disabled={Object.keys(Cart).length === 0} onClick={clearCart} className="disabled:bg-orange-300 flex mx-2 mt-6 text-white bg-orange-600 border-0 py-2 px-3 focus:outline-none hover:bg-orange-700 rounded"> <MdOutlineRemoveShoppingCart className='m-1' />ClearCart</button>
                 </div>
             </div>
