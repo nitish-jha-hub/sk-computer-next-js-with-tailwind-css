@@ -49,6 +49,16 @@ const Orders = () => {
                 <Link href={'/order?id=' + item._id}><a className='text-orange-600 font-serif font-semibold'>Details</a></Link>
               </div>
             })}
+            {/* {orders.slice(0,10).map((item) => {
+              return <div key={item._id} className="flex justify-between border-t border-b border-gray-200 py-2">
+                <span className="text-gray-500">{item.orderId}</span>
+                <span className="text-gray-500">{item.email}</span>
+                <span className="text-gray-900">{item.amount}</span>
+                <Link href={'/order?id=' + item._id}><a className='text-orange-600 font-serif font-semibold'>Details</a></Link>
+              </div>
+            })}
+            <button>Show All</button> */}
+
             
           </div>
 
