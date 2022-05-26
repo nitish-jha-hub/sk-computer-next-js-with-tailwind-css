@@ -59,7 +59,7 @@ const Signup = () => {
 
       if (response.success) {
         setTimeout(() => {
-          router.push(`${process.env.NEXT_PUBLIC_HOST}login`)
+          router.push(`${process.env.NEXT_PUBLIC_HOST}/login`)
         }, 2000);
         toast.success('Success! your account created', {
           position: "top-center",
@@ -73,7 +73,7 @@ const Signup = () => {
       }
       else {
         setTimeout(() => {
-          router.push(`${process.env.NEXT_PUBLIC_HOST}login`)
+          router.push(`${process.env.NEXT_PUBLIC_HOST}/login`)
         }, 2000);
         toast.error('User Already Exists', {
           position: "top-center",

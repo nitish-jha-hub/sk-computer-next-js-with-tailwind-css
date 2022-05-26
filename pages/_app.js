@@ -63,11 +63,11 @@ function MyApp({ Component, pageProps }) {
     let myCart = Cart;
     if (itemCode in Cart) {
       myCart[itemCode].qty = Cart[itemCode].qty + 1
-      router.push(`${process.env.NEXT_PUBLIC_HOST}checkout`)
+      router.push(`${process.env.NEXT_PUBLIC_HOST}/checkout`)
     }
     else {
       myCart[itemCode] = { qty: 1, price, name, size, varient }
-      router.push(`${process.env.NEXT_PUBLIC_HOST}checkout`)
+      router.push(`${process.env.NEXT_PUBLIC_HOST}/checkout`)
     }
     saveCart(myCart)
   }
