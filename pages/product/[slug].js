@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import mongoose from 'mongoose';
 import Product from '../../modals/product'
 import Error from 'next/error';
+import {MdLocationOn} from 'react-icons/md'
 
 const Post = ({ addToCart, BuyNow, product, error }) => {  
   const router = useRouter()
@@ -131,8 +132,9 @@ const Post = ({ addToCart, BuyNow, product, error }) => {
                 </svg>
               </button>
             </div>
-            <div className='flex mt-8'>
-              <input onChange={onChangePin} className='border-2 border-neutral-400 rounded-md' type="text" placeholder='Enter Your Pin' />
+            <p className="text-xs italic text-red-500 mt-8 ml-9 mb-1">Enter your area PinCode ex: 852106</p>
+            <div className='flex '>
+            <MdLocationOn className='text-3xl mt-1 text-orange-600'/><input onChange={onChangePin} className='border-2 border-neutral-400 rounded-md' type="text"   placeholder=' Enter Delivery Pincode'/>
               <button onClick={cheakServiceability} className="flex ml-auto mr-14 text-white bg-orange-600 border-0 py-2 px-6 focus:outline-none hover:bg-orange-700 rounded">Cheak</button>
             </div>
             {!service && service != null && <div className='text-red-700'>Sorry! We do not delivered to this pin code</div>}

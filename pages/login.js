@@ -110,15 +110,14 @@ const Login = () => {
                                                     />
                                                 </div>
                                                 <div className="flex items-center">
-                                                    <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" />
+                                                    <input defaultChecked id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4"/>
                                                     <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900"> Remember me </label>
                                                 </div>
                                                 <div className="text-center pt-1 mb-6 pb-1">
                                                     <button
                                                         type="submit"
                                                         // have to cheak transion on click
-                                                        className="inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
-
+                                                        className="inline-block px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-orange-700 hover:shadow-lg focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out w-full mb-3"
                                                         data-mdb-ripple="true"
                                                         data-mdb-ripple-color="light"
                                                         style={{ background: "linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593)" }}

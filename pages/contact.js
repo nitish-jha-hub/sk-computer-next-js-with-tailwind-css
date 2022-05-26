@@ -17,7 +17,7 @@ const contact = () => {
 
       <div className="relative my-1 mx-4 justify-center flex">
         <h2
-          className="absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-serif text-4xl font-semibold text-slate-800 ">
+          className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-slate-700 absolute z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-3xl lg:text-7xl font-bold">
           CONTACT US
         </h2>
         <Image className='rounded-2xl' src={ContactPic} width={1350} height={400}
