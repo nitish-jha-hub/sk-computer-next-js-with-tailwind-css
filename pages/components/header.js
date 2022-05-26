@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react'
 
 const Header = ({ logout, user, Cart, addToCart, removeFromCart, clearCart, subTotal }) => {  
-    console.log(user)  
+    // console.log(user)  
     const toggleCart = () => {
         if (ref.current.classList.contains('translate-x-full')) {
             ref.current.classList.remove('translate-x-full')
@@ -62,14 +62,14 @@ const Header = ({ logout, user, Cart, addToCart, removeFromCart, clearCart, subT
 
             <div className='z-10 absolute flex right-8 top-4 cursor-pointer md:right-3'>
                 <div onMouseOver={() => { setDropdown(true) }} onMouseLeave={() => { setDropdown(false) }}>
-                    {user.value && <VscAccount className='mx-2 text-3xl text-slate-800' />}
+                    {user && <VscAccount className='mx-2 text-3xl text-slate-800' />}
                     {dropdown && <div onMouseOver={() => { setDropdown(true) }} onMouseLeave={() => { setDropdown(false) }} className='absolute bg-orange-300 p-2 font-bold rounded-xl drop-shadow-2xl'><ul>
                         <Link href="/myaccount"><a><li className='hover:text-slate-100'>Account</li></a></Link>
                         <Link href="/orders"><a><li className='hover:text-slate-100'>MyOrders</li></a></Link>
                         <li onClick={logout} className='hover:text-slate-100 cursor-pointer'>LogOut</li>
                     </ul></div>}
                 </div>
-                {user.value == null && <Link href="/login"><a><button className=' text-white bg-orange-600 py-1 px-1 focus:outline-none hover:bg-orange-700 border-2 rounded-full"'>Login</button></a></Link>}
+                {!user && <Link href="/login"><a><button className=' text-white bg-orange-600 py-1 px-1 focus:outline-none hover:bg-orange-700 border-2 rounded-full"'>Login</button></a></Link>}
                 <a title='Your Shopping cart'><AiOutlineShoppingCart onClick={toggleCart} className='text-slate-800 text-3xl' /></a>
             </div>
 

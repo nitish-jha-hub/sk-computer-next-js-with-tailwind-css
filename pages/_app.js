@@ -10,8 +10,8 @@ import LoadingBar from 'react-top-loading-bar'
 function MyApp({ Component, pageProps }) {
   const [Cart, setCart] = useState({})
   const [subTotal, setSubTotal] = useState(0)
-  const [user, setUser] = useState({ value: null })
-  const [key, setKey] = useState(1)
+  const [user, setUser] = useState()
+  // const [key, setKey] = useState(1)
   const [progress, setProgress] = useState(0)
   const router = useRouter()
 
@@ -34,19 +34,19 @@ function MyApp({ Component, pageProps }) {
     const myuser = JSON.parse(localStorage.getItem("myuser"))
     if (myuser) {
       setUser({ value: myuser.token, email: myuser.email })
+      // setKey(Math.random())
     }
-    setKey(Math.random())
-    // setKey(Math.random()) //to rerender element//throw a react state update error in console. ie-can't upate state of unmounted components
+
 
   }, [router.query])
 
   const logout = () => {
     localStorage.removeItem('myuser')
-    setUser({ value: null })
-    setKey(Math.random())
+    setUser()
+    // setKey(Math.random())
     router.push('/')
   }
-
+  // console.log(key)
   const saveCart = (myCart) => {
     // stringify mycart
     localStorage.setItem("Cart", JSON.stringify(myCart))
@@ -126,8 +126,8 @@ function MyApp({ Component, pageProps }) {
       waitingTime={500}
       onLoaderFinished={() => setProgress(0)}
     />
-    {key && <Header logout={logout} user={user} key={key} Cart={Cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />}
-    {<Component Cart={Cart} BuyNow={BuyNow} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />}
+    <Header logout={logout} user={user}  Cart={Cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
+    <Component Cart={Cart} BuyNow={BuyNow} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
     <Footer />
   </>
 }
