@@ -17,7 +17,7 @@ export default function home() {
         <marquee behavior="scroll" direction="left" height="" width="100%">Hello, Welcome to SK Computer saharsa, Bihar </marquee>
       </div>
       <div className="flex flex-wrap shadow-sm my-2 rounded-xl font-mono justify-evenly">
-        <div className="max-w-lg text-5xl text-center font-serif font-bold text-fuchsia-800">
+        <div className="max-w-lg text-3xl md:text-5xl text-center font-serif font-bold text-fuchsia-800">
           <h1 className='text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-pink-600'>Software or Hardware problem? One Solution</h1> <br />
           <h2 className="m-2 text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-pink-600">SK COMPUTER AND PRINTER SAHARSA,BIHAR</h2>
 

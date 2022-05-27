@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 import { AiOutlineShoppingCart, AiFillCloseSquare, AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai'
 import { BsFillBagCheckFill } from 'react-icons/bs'
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md'
-import Router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { VscAccount } from 'react-icons/vsc'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,12 +14,12 @@ import { useState } from 'react'
 const Header = ({ logout, user, Cart, addToCart, removeFromCart, clearCart, subTotal }) => {
     const [dropdown, setDropdown] = useState(false)
     const [sidecart, setSidecart] = useState(false)
-    let router = useRouter()
-    console.log(router)
-
+    const router = useRouter()
+    
+    // console.log(Object.keys(Cart).length)
     useEffect(() => {
         Object.keys(Cart).length !== 0 && setSidecart(true)
-        let nosidecart = ['/checkout', '/orders']
+        let nosidecart = ['/checkout', '/orders', '/order', '/contact', '/about', '/myaccount']
         if (nosidecart.includes(router.pathname)) {
             setSidecart(false)
         }
@@ -36,7 +36,7 @@ const Header = ({ logout, user, Cart, addToCart, removeFromCart, clearCart, subT
             < ToastContainer />
             <div className='sticky top-0 z-40'>
             {!sidecart && <span onMouseOver={() => { setDropdown(true) }} onMouseLeave={() => { setDropdown(false) }}  className='absolute z-30 top-4 right-14 md:right-9'>
-                {dropdown && <div className='absolute right-2 top-4 z-30 bg-orange-300 p-2 font-bold rounded-xl drop-shadow-2xl'><ul>
+                {dropdown && <div className='absolute right-1 top-7 z-30 bg-orange-300 p-2 font-bold rounded-xl drop-shadow-2xl'><ul>
                     <Link href="/myaccount"><a><li className='hover:text-slate-100'>Account</li></a></Link>
                     <Link href="/orders"><a><li className='hover:text-slate-100'>MyOrders</li></a></Link>
                     <li onClick={logout} className='hover:text-slate-100 cursor-pointer'>LogOut</li>
