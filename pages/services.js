@@ -10,7 +10,7 @@ const services = () => {
                 <title>Services Offered | SK Computer</title>
                 <meta name="description" content="We (SK Computer Saharsa Bihar) Repair and Sell all electronics products as well as computer,printer(HP,Brother,Epson etc) Laptop,TFT,LCD,LED and its accessories" />
                 <meta name="keywords"
-                    content="SK Computer, Sk Computer Saharsa, sk computer Baghwa, SK-Computer, Printer Service Center, Computer Repair Center, Online Store, offline store, printer sell, sale, Services, Saharsa, Bihar India" />
+                    content="our services, top services, laptop repair, printer repair, system assemble, SK Computer, Sk Computer Saharsa, sk computer Baghwa, SK-Computer, Printer Service Center, Computer Repair Center, Online Store, offline store, printer sell, sale, Services, Saharsa, Bihar India" />
                 <meta name="author" content="Nitish Jha" />
                 <link rel="icon" href="/favicon.ico?" />
             </Head>

@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { BsWhatsapp } from 'react-icons/bs'
 
@@ -45,13 +46,13 @@ function Footer() {
               </svg>
             </a>
             <a href="https://wa.me/+919939527286" target={'_blank'} rel="noreferrer">
-            <BsWhatsapp/> 
+              <BsWhatsapp />
             </a>
-            
+
           </div>
         </div>
         <div className="mx-6 py-10 text-center md:text-left">
-          <div className="grid grid-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-1 md:grid-cols-2 lg:grid-cols-5 gap-5">
             <div className="">
               <h6 className="
             uppercase
@@ -60,8 +61,7 @@ function Footer() {
             flex
             items-center
             justify-center
-            md:justify-start
-          ">
+            md:justify-start">
                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cubes"
                   className="w-4 mr-3" role="img" xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 512 512">
@@ -109,7 +109,7 @@ function Footer() {
                 <a href="#!" className="text-gray-600">Return Policy</a>
               </p>
             </div>
-            <div className="">
+            <div>
               <h6 className="uppercase font-semibold mb-4 flex justify-center md:justify-start">
                 Contact
               </h6>
@@ -147,11 +147,16 @@ function Footer() {
                 +91 9939527286
               </a>
             </div>
+            <div>
+              <Image src="/pay.png" width={500} height={300} alt='we accept BHIM, paytm, phonepay,google pay, netanking, mastercard' />
+            </div>
           </div>
         </div>
         <div className="text-center p-6 bg-gray-200">
           <span>© 2022 Copyright:</span>
-          <a className="text-gray-600 font-semibold" href={'/'}> SK Computer</a>
+          <a className="text-gray-600 text-center font-semibold" href={'/'}> SK Computer | </a>
+          <span>Design and devloped by:</span>
+          <a className=" text-orange-600 hover:underline font-semibold" href={'https://www.facebook.com/natkhat.nitish/'} target="_blank" rel="noreferrer"> Nitish Jha</a>
         </div>
       </footer>
     </div>

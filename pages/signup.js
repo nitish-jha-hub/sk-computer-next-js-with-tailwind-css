@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Head from 'next/head';
 import { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -102,6 +103,14 @@ const Signup = () => {
   }
   return (
     <div>
+      <Head>
+        <title>Create Account | SK Computer</title>
+        <meta name="description" content="We Repair and sale all electronics products as well as computer,printer(HP,Brother,Epson etc) Laptop,TFT,LCD,LED and its accessories" />
+        <meta name="keywords"
+          content="Create Account, sign up, create user account, new account, SK Computer, Sk Computer Saharsa, sk computer Baghwa, SK-Computer, Printer Service Center, Computer Repair Center, Online Store, Offline store, printer sell, sale, Services, Saharsa, Bihar India" />
+        <meta name="author" content="Nitish Jha" />
+        <link rel="icon" href="/favicon.ico?" />
+      </Head>
       <div className="font-mono ">
         <div className="container mx-auto">
           <div className="flex justify-center px-6 my-12">

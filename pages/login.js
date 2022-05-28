@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import Head from 'next/head';
 import { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,11 +15,11 @@ const Login = () => {
     const [password, setPassword] = useState('')
 
     useEffect(() => {
-        if (localStorage.getItem ('myuser') ) {
-            router.push('/')            
+        if (localStorage.getItem('myuser')) {
+            router.push('/')
         }
     }, [router])
-    
+
 
     const handleChange = (e) => {
         if (e.target.name == 'email') {
@@ -45,7 +46,7 @@ const Login = () => {
         setEmail('')
         setPassword('')
         if (response.success) {
-            localStorage.setItem('myuser', JSON.stringify({token: response.token, email: response.email}))
+            localStorage.setItem('myuser', JSON.stringify({ token: response.token, email: response.email }))
             toast.success('you are successfully logged in', {
                 position: "top-center",
                 autoClose: 1000,
@@ -74,6 +75,14 @@ const Login = () => {
 
     return (
         <div>
+            <Head>
+                <title>Login | SK Computer</title>
+                <meta name="description" content="We Repair and sale all electronics products as well as computer,printer(HP,Brother,Epson etc) Laptop,TFT,LCD,LED and its accessories" />
+                <meta name="keywords"
+                    content="login, sign-in, user account, SK Computer, Sk Computer Saharsa, sk computer Baghwa, SK-Computer, Printer Service Center, Computer Repair Center, Online Store, Offline store, printer sell, sale, Services, Saharsa, Bihar India" />
+                <meta name="author" content="Nitish Jha" />
+                <link rel="icon" href="/favicon.ico?" />
+            </Head>
             <section className="h-full gradient-form bg-gray-200">
                 <div className="container py-4 px-6 h-full">
                     <div className="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
@@ -110,7 +119,7 @@ const Login = () => {
                                                     />
                                                 </div>
                                                 <div className="flex items-center">
-                                                    <input defaultChecked id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4"/>
+                                                    <input defaultChecked id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4" />
                                                     <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900"> Remember me </label>
                                                 </div>
                                                 <div className="text-center pt-1 mb-6 pb-1">

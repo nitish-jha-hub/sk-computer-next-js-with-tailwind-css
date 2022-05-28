@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -52,6 +53,14 @@ const Post = ({ addToCart, BuyNow, product, error }) => {
   }
   return <>
     <section className="text-gray-600 body-font overflow-hidden min-h-screen">
+    <Head>
+        <title>{product.tittle} | SK Computer</title>
+        <meta name="description" content="We Repair and sale all electronics products as well as computer,printer(HP,Brother,Epson etc) Laptop,TFT,LCD,LED and its accessories" />
+        <meta name="keywords"
+          content="Our Product, Buy Now, Add to cart, Checkout, cheak Serviceability, SK Computer, Sk Computer Saharsa, sk computer Baghwa, SK-Computer, Printer Service Center, Computer Repair Center, Online Store, Offline store, printer sell, sale, Services, Saharsa, Bihar India" />
+        <meta name="author" content="Nitish Jha" />
+        <link rel="icon" href="/favicon.ico?" />
+      </Head>
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <img alt="ecommerce" className="w-1/2 h-auto object-center rounded" src={product.img} />

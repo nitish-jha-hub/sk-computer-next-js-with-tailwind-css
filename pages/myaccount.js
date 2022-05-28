@@ -1,4 +1,5 @@
 import React from 'react'
+import Head from 'next/head';
 import { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -151,6 +152,14 @@ const Myaccount = () => {
 
   return (
     <div className='mx-10'>
+      <Head>
+        <title>MY Account: {user.email} | SK Computer</title>
+        <meta name="description" content="We Repair and sale all electronics products as well as computer,printer(HP,Brother,Epson etc) Laptop,TFT,LCD,LED and its accessories" />
+        <meta name="keywords"
+          content="My Account, Account, user account, update details, change password, update password, SK Computer, Sk Computer Saharsa, sk computer Baghwa, SK-Computer, Printer Service Center, Computer Repair Center, Online Store, Offline store, printer sell, sale, Services, Saharsa, Bihar India" />
+        <meta name="author" content="Nitish Jha" />
+        <link rel="icon" href="/favicon.ico?" />
+      </Head>
       <div>
         <h1 className='text-center font-bold mt-8 bg-slate-200 text-xl'>MY Account</h1>
         <h2 className='font-semibold text-center'>welcome <span className='font-bold text-orange-600 text-lg'>{user.email}</span></h2>

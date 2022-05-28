@@ -150,6 +150,14 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
 
   return (
     <div className=''>
+      <Head>
+        <title>Checkout-Initiate payment | SK Computer</title>
+        <meta name="description" content="We Repair and sale all electronics products as well as computer,printer(HP,Brother,Epson etc) Laptop,TFT,LCD,LED and its accessories" />
+        <meta name="keywords"
+          content="buy now, Initiate payment, check serviceability, paytm, Sk Computer Saharsa, sk computer Baghwa, SK-Computer, Printer Service Center, Computer Repair Center, Online Store, Offline store, printer sell, sale, Services, Saharsa, Bihar India" />
+        <meta name="author" content="Nitish Jha" />
+        <link rel="icon" href="/favicon.ico?" />
+      </Head>
       <Head><meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" /></Head>
       <Script type="application/javascript" crossorigin="anonymous" src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgpui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_PAYTM_MID}.js`} />
       <h2 className='text-center text-2xl font-serif font-semibold'>Checkout</h2>

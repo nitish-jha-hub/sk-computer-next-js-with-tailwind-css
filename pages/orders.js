@@ -2,6 +2,7 @@ import { React, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import Link from 'next/link'
+import Head from 'next/head'
 
 const Orders = () => {
   const router = useRouter()
@@ -29,6 +30,14 @@ const Orders = () => {
 
   return (
     <div className='min-h-screen'>
+      <Head>
+        <title>My Orders | SK Computer</title>
+        <meta name="description" content="We Repair and sale all electronics products as well as computer,printer(HP,Brother,Epson etc) Laptop,TFT,LCD,LED and its accessories" />
+        <meta name="keywords"
+          content="my orders, user orders, total order, order list, SK Computer, Sk Computer Saharsa, sk computer Baghwa, SK-Computer, Printer Service Center, Computer Repair Center, Online Store, Offline store, printer sell, sale, Services, Saharsa, Bihar India" />
+        <meta name="author" content="Nitish Jha" />
+        <link rel="icon" href="/favicon.ico?" />
+      </Head>
       <section className="text-gray-600 body-font overflow-hidden">
         <div className="container px-5 mx-auto">
           <div className="w-full my-8 ">
