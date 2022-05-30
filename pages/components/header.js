@@ -51,25 +51,25 @@ const Header = ({ logout, user, Cart, addToCart, removeFromCart, clearCart, subT
                     <div className='hidden lg:inline-block'><Link href="/"><a className="" ><Image src="/assets/skcomputerlogo2.png" alt="Logo sk-computer saharsa" width={175} height={55} /></a></Link></div>
                 </div>
                 <ul className="flex flex-wrap md:mr-20" id="navmenu">
-                    <li className="md:m-4 m-3 "> <Link href='/' ><a
-                        className="p-2 rounded-xl cursor-pointer shadow-md bg-slate-50 hover:bg-slate-100 drop-shadow-lg"
+                    <li className="md:m-4 m-2 "> <Link href='/' ><a
+                        className="md:p-2 p-1 focus:text-orange-600 font-semibold rounded-xl cursor-pointer shadow-md bg-slate-50 hover:bg-slate-100 drop-shadow-lg"
                         title="Home">Home</a></Link></li>
-                    <li className="md:m-4 m-3 "><Link href='/contact'><a
-                        className="p-2 rounded-xl cursor-pointer shadow-md bg-slate-50 hover:bg-slate-100 drop-shadow-lg"
+                    <li className="md:m-4 m-2 "><Link href='/contact'><a
+                        className="md:p-2 p-1 focus:text-orange-600 font-semibold rounded-xl cursor-pointer shadow-md bg-slate-50 hover:bg-slate-100 drop-shadow-lg"
                         title="Contact US">Contact</a></Link></li>
-                    <li className="md:m-4 m-3 "><Link href='/services' ><a
-                        className="p-2 rounded-xl cursor-pointer shadow-md bg-slate-50 hover:bg-slate-100 drop-shadow-lg"
+                    <li className="md:m-4 m-2 "><Link href='/services' ><a
+                        className="md:p-2 p-1 focus:text-orange-600 font-semibold rounded-xl cursor-pointer shadow-md bg-slate-50 hover:bg-slate-100 drop-shadow-lg"
                         title="Services offered">Services</a></Link></li>
-                    <li className="md:m-4 m-3 "><Link href='/products' ><a
-                        className="p-2 rounded-xl cursor-pointer shadow-md bg-slate-50 hover:bg-slate-100 drop-shadow-lg"
+                    <li className="md:m-4 m-2 "><Link href='/products' ><a
+                        className="md:p-2 p-1 focus:text-orange-600 font-semibold rounded-xl cursor-pointer shadow-md bg-slate-50 hover:bg-slate-100 drop-shadow-lg"
                         title="Our Products">Shop Now</a></Link></li>
                 </ul>
-                <a href="#" className="md:hidden absolute left-6 top-4">
+                {/* <a href="#" className="md:hidden absolute left-6 top-4">
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
-                </a>
+                </a> */}
 
                 <div className='absolute flex right-8 top-4 cursor-pointer md:right-3'>
 

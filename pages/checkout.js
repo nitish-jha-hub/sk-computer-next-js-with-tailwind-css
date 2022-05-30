@@ -201,7 +201,7 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
         <div className='md:w-1/2 ml-2 mr-2'>
           <h2 className='font-semibold'>2.Review Cart Items</h2>
           <div>
-            <div className='bg-orange-200 p-2'>
+            <div className='bg-slate-200 rounded-md shadow-lg shadow-orange-600 p-2'>
               <h2 className='text-lg font-serif font-semibold text-left'>Your Shopping Cart</h2>
               <ol className='list-decimal p-4'>
                 {Object.keys(Cart).length == 0 && <div className='mt-4 font-bold'>Your Cart is Empty</div>}
@@ -210,7 +210,7 @@ const Checkout = ({ Cart, addToCart, clearCart, removeFromCart, subTotal }) => {
                   return <li key={k}>
                     <div className='flex'>
                       <div className='w-2/3 font-semibold'>{Cart[k].name}</div>
-                      <div className='w-1/3 flex justify-center font-semibold'><AiFillMinusCircle onClick={() => removeFromCart(k, 1, Cart[k].price, Cart[k].name, Cart[k].size, Cart[k].varient)} className='m-1 cursor-pointer text-xl' /> {Cart[k].qty} <AiFillPlusCircle onClick={() => addToCart(k, 1, Cart[k].price, Cart[k].name, Cart[k].size, Cart[k].varient)} className='m-1 cursor-pointer text-xl' /></div>
+                      <div className='w-1/3 flex justify-center font-semibold'><AiFillMinusCircle onClick={() => removeFromCart(k, 1, Cart[k].price, Cart[k].name, Cart[k].size, Cart[k].varient)} className='m-1 cursor-pointer text-xl text-orange-600' /> {Cart[k].qty} <AiFillPlusCircle onClick={() => addToCart(k, 1, Cart[k].price, Cart[k].name, Cart[k].size, Cart[k].varient)} className='m-1 cursor-pointer text-xl text-orange-600' /></div>
                     </div>
                   </li>
                 })}

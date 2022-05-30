@@ -26,7 +26,7 @@ export default function home() {
           <Image className="rounded-2xl" src="/assets/SK-Computer-main-bg.29157249.29157249.jpg" alt="Sk Computer saharsa backgrond image" width={500} height={300} />
         </div>
       </div>
-      <div className="text-center font-serif font-semibold text-lg mt-10">
+      <div className="text-gray-600 text-center font-serif font-semibold text-lg mt-10">
         <h1>“We Repair and sale all electronic products as well as computer, printer (HP,Brother,Epson etc)
           Laptop,TFT,LCD,LED and all its accessories”
           Team sk computer
